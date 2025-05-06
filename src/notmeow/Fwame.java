@@ -177,88 +177,16 @@ public class Fwame extends JFrame {
         }
     } // fontActivate bracket
 
-
-
-    // fuck separate files then
-    /*public static void fightZomber() {
-        mob = "zomber";
-        mobPosition = "fight";
-        meow.setText("zomber approches u. what do?");
-    }
-
-    public static void attackZomber() {
-        mobPosition = "youAttack";
-        if (zomberHP <= 0) {
-            meow.setText("you killed the zomber");
-            attackButton.setVisible(false);
-            runButton.setVisible(false);
-        } else {
-            if (hit) {
-                meow.setText("You attacked the zomber for " + player.playerDamage + " damage.");
-                continueButtonVisible();
-                mobPosition = "mobAttack";
-            } else if (!hit) { // ! = not, equal to "hit == false"
-                meow.setText("You tried to attack the zomber but missed. bozo");
-                continueButtonVisible();
-            }
-        }
-    }
-
-    public static void zomberAttack() {
-        mobPosition = "mobAttack";
-        if (player.playerHP <= 0) {
-            meow.setText("zomber killed u. rip");
-        } else {
-            if (hit) {
-                meow.setText("zomber bites u. u take " + zomberDamage + " damage.");
-                player.playerHP = player.playerHP - zomberDamage;
-            } else if (!hit) { // ! = not, equal to "hit == false"
-                meow.setText("zomber tried to bite u but missed");
-            }
-        }
-    }*/
-
     public static void continueButtonVisible() {
         attackButton.setVisible(false);
         runButton.setVisible(false);
         continueButton.setVisible(true);
     }
 
-    /*public static void continueButtonInvisible() {
+    public static void continueButtonInvisible() {
         attackButton.setVisible(true);
         runButton.setVisible(true);
         continueButton.setVisible(false);
     }
 
 } // class bracket. keep stuff inside it
-
-class buttonClicker implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (fwame.mob) {
-            case "zomber":
-                switch (fwame.mobPosition) {
-                    case "fight":
-                        if (e.getSource() == fwame.attackButton) {
-                            fwame.attackZomber();
-                        } else if (e.getSource() == fwame.continueButton) {
-                            fwame.zomberAttack();
-                        }
-                    case "mobAttack":
-                        if (e.getSource() == fwame.continueButton) {
-                            fwame.fightZomber();
-                        }
-                }
-
-                if (e.getSource() == fwame.runButton) {
-                    if (fwame.run) {
-                        fwame.meow.setText("You ran away.");
-                    } else if (!fwame.hit) {
-                        fwame.meow.setText("You try to run but trip over your own feet. loser");
-                        fwame.continueButtonVisible();
-                    } // run button else if
-                } // run button bracket
-                break;
-        } // switch bracket
-    }*/
-}

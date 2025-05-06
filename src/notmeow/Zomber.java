@@ -10,5 +10,12 @@ public class Zomber extends Creechah {
     @Override
     public void attack() {
         Fwame.meow.setText("zomber bites u for " + this.damage + " damage");
+        Player.playerHP = Player.playerHP - this.damage;
+        Fwame.playerHealthDisplay.setText("health: " + Player.playerHP);
+    }
+
+    @Override
+    public void makeSound() {
+        Fwame.meow.setText("zomber growls");
     }
 }

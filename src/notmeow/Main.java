@@ -6,15 +6,6 @@ public class Main {
     public static ArrayList<Creechah> creechahsList = new ArrayList<>();
 
     public static void main(String[] args) {
-        /*Creechah zomber = new Creechah("zomber", 100, 5);
-        Creechah creepah = new Creechah("creeper", 100, 10);
-        Creechah spooder = new Creechah("spider", 100, 5);
-        Creechah skeleton = new Creechah("skeleton", 100, 6);
-
-        creechahsList.add(zomber);
-        creechahsList.add(creepah);
-        creechahsList.add(spooder);
-        creechahsList.add(skeleton);*/
 
         Weapon woodAxe = new Weapon("Wooden Axe", 5, 100);
         Weapon stoneAxe = new Weapon("Stone Axe", 10, 100);
@@ -27,6 +18,6 @@ public class Main {
         weaponList.add(goldAxe);
         weaponList.add(diamondAxe);
 
-        // new Fwame();
+        new Fwame();
     }
 }

@@ -1,9 +1,9 @@
 package notmeow;
 
 public class Player {
-    private static int playerHP;
+    protected static int playerHP;
     static int playerDamage;
-    private static int exp;
+    protected static int exp;
     static String weapon;
 
     public static void playerSetup() {
@@ -20,6 +20,12 @@ public class Player {
     public static void attack() {
         Fwame.continueButtonVisible();
         Fwame.meow.setText("You attacked the " + Creechah.type + " for " + playerDamage + " damage.");
+        Creechah.health = Creechah.health - playerDamage;
+    }
+
+    public static void run() {
+        Fwame.continueButtonVisible();
+        Fwame.meow.setText("You ran away!");
     }
 }
 

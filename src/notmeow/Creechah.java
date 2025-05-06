@@ -21,6 +21,10 @@ public class Creechah {
         Fwame.meow.setText(this.type + " attacked u for " + this.damage + " damage");
     }
 
+    public void makeSound(){
+        Fwame.meow.setText("la creechura makes epic sound");
+    }
+
     public String getType() {
         return type;
     }
