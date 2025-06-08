@@ -4,36 +4,31 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 public class Fwame extends JFrame {
-
-    // IF YOU WANNA USE A VARIABLE FROM ANOTHER CLASS YOU HAVE TO PUT "EXTENDS"!!!!!!!!!!!!!!!! REMEMBER!!!!!!!!!!!!!!!
-    static Random random = new Random();
-    public static boolean hit = random.nextBoolean();
-    public static boolean run = random.nextBoolean();
-
-    public static String mob;
-    public static String mobPosition;
-
-    static int zomberHP = 100;
-    static int zomberDamage = 2;
 
     static JTextArea meow;
 
     Font minecraftRegular;
 
     static JPanel sidebarPanel, gamePanel, bottomPanel;
-    static JPanel textPanel, buttonPanel, statsPanel, inventoryPanel, mobDisplayPanel;
+    static JPanel textPanel, buttonPanel, statsPanel, inventoryPanel, mobDisplayPanel, mobHealthPanel;
 
-    static JLabel weaponDisplay, expDisplay, playerHealthDisplay, inventoryTitleDisplay;
+    static JLabel weaponDisplay, expDisplay, playerHealthDisplay, inventoryTitleDisplay, mobHealthDisplay, mobDisplayLabel, mobDropDisplay;
 
-    public static JButton attackButton;
-    public static JButton runButton;
-    public static JButton continueButton;
+    public static JButton attackButton, runButton, continueButton, respawnButton;
+
+    static ImageIcon zomberIcon, rottenFleshIcon;
 
     public Fwame() {
-        fontActivate();
+        // font activate
+        try {
+            minecraftRegular = Font.createFont(Font.TRUETYPE_FONT, new File("minecraft-regular.ttf")).deriveFont(15f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("minecraft-regular.ttf")));
+        } catch (IOException | FontFormatException e){
+            throw new RuntimeException(e);
+        }
 
         // setup components
         meow = new JTextArea("good evening. good day for skibidi rizz");
@@ -104,11 +99,19 @@ public class Fwame extends JFrame {
 
         continueButton = new JButton(">");
         continueButton.setFocusable(false);
-        continueButton.setBounds(0, 0, 50, 50);
+        continueButton.setBounds(95, 5, 50, 30);
         continueButton.setFont(minecraftRegular);
         continueButton.setBackground(Color.BLACK);
         continueButton.setForeground(Color.WHITE);
         continueButton.setVisible(false);
+
+        respawnButton = new JButton("respawn");
+        respawnButton.setFocusable(false);
+        respawnButton.setBounds(95, 5, 100, 30);
+        respawnButton.setFont(minecraftRegular);
+        respawnButton.setBackground(Color.BLACK);
+        respawnButton.setForeground(Color.WHITE);
+        respawnButton.setVisible(false);
 
         bottomPanel = new JPanel();
         bottomPanel.setLayout(null);
@@ -117,10 +120,29 @@ public class Fwame extends JFrame {
 
         // ------------------------------------
 
+        zomberIcon = new ImageIcon(new ImageIcon("C:\\Users\\savvy\\IdeaProjects\\meowwwwwwwwwwwwwww\\src\\notmeow\\icons\\zomber.png").getImage().getScaledInstance(150, 230, Image.SCALE_DEFAULT));
+        rottenFleshIcon = new ImageIcon(new ImageIcon("C:\\Users\\savvy\\IdeaProjects\\meowwwwwwwwwwwwwww\\src\\notmeow\\icons\\flesh.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+
         mobDisplayPanel = new JPanel();
         mobDisplayPanel.setLayout(null);
         mobDisplayPanel.setBounds(200, 30, 200, 260);
         mobDisplayPanel.setBackground(Color.RED);
+
+        mobDisplayLabel = new JLabel();
+        mobDisplayLabel.setLayout(null);
+        mobDisplayLabel.setBounds(20, 0, 200, 260);
+
+        mobHealthDisplay = new JLabel("health: 100");
+        mobHealthDisplay.setLayout(null);
+        mobHealthDisplay.setBounds(225,10, 150, 40);
+        mobHealthDisplay.setBackground(Color.black);
+        mobHealthDisplay.setForeground(Color.white);
+        mobHealthDisplay.setFont(minecraftRegular);
+        mobHealthDisplay.setOpaque(true);
+
+        mobDropDisplay = new JLabel();
+        mobDropDisplay.setLayout(null);
+        mobDropDisplay.setBounds(80, 200, 50, 50);
 
         gamePanel = new JPanel();
         gamePanel.setLayout(null);
@@ -152,7 +174,12 @@ public class Fwame extends JFrame {
 
         textPanel.add(meow);
 
+        gamePanel.add(mobHealthDisplay);
         gamePanel.add(mobDisplayPanel);
+        mobDisplayPanel.add(mobDisplayLabel);
+        mobDisplayPanel.add(mobDropDisplay);
+        mobDropDisplay.addMouseListener(new itemClicker());
+
 
         this.add(sidebarPanel);
         this.add(bottomPanel);
@@ -160,22 +187,13 @@ public class Fwame extends JFrame {
 
         Player.playerSetup();
         this.setVisible(true);
-        Battol.randomCreatureGenerator(Main.creechahsList);
+        Battol.randomCreatureGenerator();
 
         attackButton.addActionListener(new buttonClicker());
         runButton.addActionListener(new buttonClicker());
         continueButton.addActionListener(new buttonClicker());
     }
 
-    public void fontActivate() {
-        try {
-            minecraftRegular = Font.createFont(Font.TRUETYPE_FONT, new File("minecraft-regular.ttf")).deriveFont(15f);
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("minecraft-regular.ttf")));
-        } catch (IOException | FontFormatException e){
-            throw new RuntimeException(e);
-        }
-    } // fontActivate bracket
 
     public static void continueButtonVisible() {
         attackButton.setVisible(false);
@@ -187,6 +205,11 @@ public class Fwame extends JFrame {
         attackButton.setVisible(true);
         runButton.setVisible(true);
         continueButton.setVisible(false);
+    }
+
+    public static void mobDropDisplayVisible() {
+        Fwame.mobDisplayLabel.setVisible(false);
+        Fwame.mobDropDisplay.setVisible(true);
     }
 
 } // class bracket. keep stuff inside it

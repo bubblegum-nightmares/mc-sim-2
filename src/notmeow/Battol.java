@@ -2,15 +2,18 @@ package notmeow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Objects;
 import java.util.Random;
 
 public class Battol {
-    public static Zomber zomber = new Zomber("zomber", 100, 5);
-    public static int position = 1;
+    public static String mobDrop = "";
 
-    public static void randomCreatureGenerator(ArrayList<Creechah> creechahsList) {
+    public static Zomber zomber = new Zomber("zomber", 100, 5);
+    public static int position = 1; // chat is this real
+
+    public static void randomCreatureGenerator() {
         Random randomNumber = new Random(); // this makes random number (duh)
         int creaturePickedInt = randomNumber.nextInt(2);
 
@@ -20,30 +23,51 @@ public class Battol {
                 Creechah.type = zomber.getType();
                 break;
         }
-
         fightInit();
     }
 
     public static void fightInit() {
         Fwame.meow.setText(Creechah.type + " approaches u. what do?");
         Fwame.continueButtonInvisible();
-        position = 1; // this is for continue button, since its only one button computer needs to know what to display when its clicked at differnt points
+
         switch (Creechah.type) {
             case "zomber":
+                Fwame.mobDisplayLabel.setIcon(Fwame.zomberIcon);
                 if (Zomber.health <= 0) {
+                    position = 3;
                     Fwame.meow.setText("you killed the zomber");
-                }
-        }
-    }
+                    Fwame.mobDropDisplay.setIcon(Fwame.rottenFleshIcon);
+                    Fwame.mobDropDisplayVisible();
+                    Fwame.continueButtonVisible();
+                    mobDrop = "rotten flesh";
+                } // if statement bracket
+        } // switch bracket
+    } // fightInit bracket
 
+    // for clicking continue button
+    // position 1 = creature is attacking you
+    // position 2 = you are attacking creature
+    // position 3 = creature is dead
+    // position 4 = you are now viewing the item dropped by the creature
     public static void continyoo() {
-        if (Objects.equals(Creechah.type, "zomber") && position == 1) {
+        if (Objects.equals(Creechah.type, "zomber") && position == 1) { // if creature is a zomber and position is 1
             Battol.zomber.attack();
             position = 2;
         } else if (position == 2) {
-            fightInit();
+            if (Player.playerHP <= 0) {
+                Fwame.meow.setText("your died :(");
+                Fwame.continueButton.setVisible(false);
+                Fwame.respawnButton.setVisible(true);
+            } else {
+                fightInit();
+            }
+        } else if (position == 3) {
+              Fwame.meow.setText("it dropped a item. click it to pick it \nup. \nclick continue button to leave it");
+              position = 4;
+        } else if (position == 4) {
+            randomCreatureGenerator();
         }
-    }
+    } // continyoo bracket
 } // battol class bracket
 
 class buttonClicker implements ActionListener {
@@ -56,6 +80,40 @@ class buttonClicker implements ActionListener {
         } else if (e.getSource() == Fwame.runButton){
             Player.run();
         }
+        else if (e.getSource() == Fwame.respawnButton) {
+            Fwame.respawnButton.setVisible(false);
+            Fwame.meow.setText("your alive");
+            Battol.fightInit();
+        }
     }
 
 } // button clicker class bracket
+
+class itemClicker implements MouseListener {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        switch (Battol.mobDrop) {
+            case "rotten flesh":
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+}

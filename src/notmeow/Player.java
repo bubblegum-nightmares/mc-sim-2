@@ -8,7 +8,7 @@ public class Player {
 
     public static void playerSetup() {
         playerHP = 100;
-        playerDamage = 2;
+        playerDamage = 50;
         weapon = "grah";
         exp = 0;
 
@@ -19,8 +19,9 @@ public class Player {
 
     public static void attack() {
         Fwame.continueButtonVisible();
-        Fwame.meow.setText("You attacked the " + Creechah.type + " for " + playerDamage + " damage.");
+        Fwame.meow.setText("You attacked the " + Creechah.type + " for " + playerDamage + " \ndamage.");
         Creechah.health = Creechah.health - playerDamage;
+        Fwame.mobHealthDisplay.setText("health: " + Creechah.health);
     }
 
     public static void run() {
